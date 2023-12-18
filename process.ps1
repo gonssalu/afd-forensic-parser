@@ -40,9 +40,6 @@ function Process-RecentFolders {
         $jlecmd_cmd = "$jlecmd -d $recentFolderPath --csv $outputFolder"
 
         Run-CommandWithLogging -Command $jlecmd_cmd -Description "Running Jump List scan for $($userDirectory.Name)..."
-
-        # Output the full path to the Recent folder
-        Write-Host "Recent folder path for $($userDirectory.Name): $recentFolderPath"
     }
 }
 
@@ -121,7 +118,24 @@ Run-CommandWithLogging -Command $recmd_cmd -Description "Kroll Batch scan for al
 Run-CommandWithLogging -Command $recmd_globalcmd -Description "Kroll Batch scan for global registry files"
 Run-CommandWithLogging -Command $AmCacheParser_cmd -Description "AmCache Parser"
 
-Write-Host "Done!"
+Write-Host "Done!`n`nConverting CSV files' separator to commas..."
+
+# Get all CSV files in the directory
+$csvFiles = Get-ChildItem -Path $OutputPath -Filter *.csv -Recurse
+
+# Loop through each CSV file
+foreach ($csvFile in $csvFiles) {
+    # Read the content of the CSV file as an array of lines
+    $content = Get-Content $csvFile.FullName
+
+    # Add 'SEP=,' to the start of the content
+    $newContent = @("SEP=,") + $content
+
+    # Write the modified content back to the CSV file, preserving line breaks
+    $newContent | Set-Content -Path $csvFile.FullName
+}
+
+Write-Host "Conversion successfully complete!"
 
 # Record the end time
 $endTime = Get-Date
