@@ -24,20 +24,20 @@ No `-ZimmermanTools` colocam o path, **com o net6**, de onde têm as tools guard
 O `-InputPath` recebe o caminho para uma pasta onde devem estar todos os ficheiros a analisar. Devem estar na seguinte estrutura:
 
 ```
->Users
->>2123456
->>>NTUSER.dat
->>>UsrClass.dat
->>>Recent (PASTA)
->>2654321
->>>...
-
->Global
->>SOFTWARE
->>SYSTEM
->>SAM
->>SECURITY
->>Amcache.hve
+.
+├── Users/
+│   ├── 2123456/
+│   │   ├── NTUSER.DAT
+│   │   ├── UsrClass.dat
+│   │   └── Recent/ (pasta)
+│   └── 2654321/
+│       └── ...
+└── Global/
+    ├── SOFTWARE
+    ├── SYSTEM
+    ├── SAM
+    ├── SECURITY
+    └── Amcache.hve
 ```
 
 2123456 é um nome exemplo de uma das contas. A pasta Recent é a pasta que está no `%appdata%/Microsoft/Windows/Recent` (contém as cenas das JumpLists).
