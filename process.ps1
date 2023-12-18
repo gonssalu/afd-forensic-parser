@@ -1,7 +1,8 @@
 param (
     [string]$ZimmermanTools,
     [string]$InputPath,
-    [string]$OutputPath
+    [string]$OutputPath,
+    [switch]$UseNewWindows
 )
 
 function Get-ToolExecutablePath {
@@ -39,11 +40,21 @@ function Process-RecentFolders {
         $jlecmd_cmd = "$jlecmd -d $recentFolderPath --csv $outputFolder"
 
         Write-Host "Running Jump List scan for $($userDirectory.Name)..."
-        Start-Process -FilePath "cmd.exe" -ArgumentList "/c $jlecmd_cmd" -Wait
+        Start-Process -FilePath "cmd.exe" -ArgumentList "/c $jlecmd_cmd" -Wait -NoNewWindow:(!$UseNewWindows)
 
         # Output the full path to the Recent folder
         Write-Host "Recent folder path for $($userDirectory.Name): $recentFolderPath"
     }
+}
+
+function Run-CommandWithLogging {
+    param (
+        [string]$Command,
+        [string]$Description
+    )
+
+    Write-Host "Running $Description..."
+    Start-Process -FilePath "cmd.exe" -ArgumentList "/c $Command" -Wait -NoNewWindow:(!$UseNewWindows)
 }
 
 # Check if folder paths are provided
@@ -102,15 +113,9 @@ $startTime = Get-Date
 
 Process-RecentFolders -usersPath $usersPath -jlecmd $jlecmd -OutputUsers $OutputUsers
 
-# Start the process
-Write-Host "Running Kroll Batch scan for all users..."
-Start-Process -FilePath "cmd.exe" -ArgumentList "/c $recmd_cmd" -Wait
-
-Write-Host "Running Kroll Batch scan for global registry files..."
-Start-Process -FilePath "cmd.exe" -ArgumentList "/c $recmd_globalcmd" -Wait
-
-Write-Host "Running AmCache Parser..."
-Start-Process -FilePath "cmd.exe" -ArgumentList "/c $AmCacheParser_cmd" -Wait
+Run-CommandWithLogging -Command $recmd_cmd -Description "Kroll Batch scan for all users"
+Run-CommandWithLogging -Command $recmd_globalcmd -Description "Kroll Batch scan for global registry files"
+Run-CommandWithLogging -Command $AmCacheParser_cmd -Description "AmCache Parser"
 
 Write-Host "Done!"
 
