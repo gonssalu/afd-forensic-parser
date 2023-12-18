@@ -55,7 +55,7 @@ function Run-CommandWithLogging {
     Write-Host "Running $Description..."
     if($DebugMode) {
         Write-Host "Command: $Command"
-        Start-Process -FilePath "cmd.exe" -ArgumentList "/c $Command" -Wait
+        Start-Process -FilePath "cmd.exe" -ArgumentList "/c $Command" -Wait -NoNewWindow
     }else{
         Start-Process -FilePath "cmd.exe" -ArgumentList "/c $Command" -Wait -WindowStyle Hidden
     }
