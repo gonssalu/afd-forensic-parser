@@ -2,7 +2,7 @@ param (
     [string]$ZimmermanTools,
     [string]$InputPath,
     [string]$OutputPath,
-    [switch]$UseNewWindows
+    [switch]$DebugMode
 )
 
 function Get-ToolExecutablePath {
@@ -39,8 +39,7 @@ function Process-RecentFolders {
         
         $jlecmd_cmd = "$jlecmd -d $recentFolderPath --csv $outputFolder"
 
-        Write-Host "Running Jump List scan for $($userDirectory.Name)..."
-        Start-Process -FilePath "cmd.exe" -ArgumentList "/c $jlecmd_cmd" -Wait -NoNewWindow:(!$UseNewWindows)
+        Run-CommandWithLogging -Command $jlecmd_cmd -Description "Running Jump List scan for $($userDirectory.Name)..."
 
         # Output the full path to the Recent folder
         Write-Host "Recent folder path for $($userDirectory.Name): $recentFolderPath"
@@ -54,7 +53,12 @@ function Run-CommandWithLogging {
     )
 
     Write-Host "Running $Description..."
-    Start-Process -FilePath "cmd.exe" -ArgumentList "/c $Command" -Wait -NoNewWindow:(!$UseNewWindows)
+    if($DebugMode) {
+        Write-Host "Command: $Command"
+        Start-Process -FilePath "cmd.exe" -ArgumentList "/c $Command" -Wait
+    }else{
+        Start-Process -FilePath "cmd.exe" -ArgumentList "/c $Command" -Wait -WindowStyle Hidden
+    }
 }
 
 # Check if folder paths are provided
