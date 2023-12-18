@@ -28,7 +28,6 @@ function Process-RecentFolders {
         [string]$OutputUsers
     )
 
-    # Get all directories inside "$InputPath\Users"
     $userDirectories = Get-ChildItem -Path $usersPath -Directory
 
     foreach ($userDirectory in $userDirectories) {
