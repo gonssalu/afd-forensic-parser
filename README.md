@@ -50,7 +50,7 @@ A pasta onde irão ser guardados os resultados. (:warning: O script eliminará t
 
 ## Resultados
 
-Os resultados saíram da seguinte forma:
+Os resultados sairão da seguinte forma:
 
 - Dentro da pasta **Global** haverá um ficheiro CSV com os resultados da Análise pela ferramenta REcmd a todos os ficheiros que estavam na pasta Global do Input.
 - Dentro da pasta **Global/AmCacheParserReport** estão os ficheiros CSV resultantes da análise ao Amcache.hve pela ferramenta AmCacheParser.
