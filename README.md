@@ -1,6 +1,6 @@
 # process.ps1
 
-Malta, fiz um script que usando as tools do Zimmerman dá parse, automaticamente, a todos os artefactos no registry do Windows, à AmCache e as JumpLists. Honestamente penso que chega, mas se souberem de mais algum artefacto que não seja esses dois e não esteja no Windows, digam.
+Malta, fiz um script que utiliza as tools do Zimmerman para dar parse, automaticamente, a todos os artefactos no registry do Windows, à AmCache e as JumpLists. Honestamente penso que chega, mas se souberem de mais algum artefacto que não seja esses dois e não esteja no Windows, digam.
 
 ## Requisitos
 
