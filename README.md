@@ -1,6 +1,6 @@
 # process.ps1
 
-Este script utiliza as tools do Zimmerman para dar parse, automaticamente, a todos os artefactos no registry do Windows, à AmCache e as JumpLists.
+Este script utiliza as tools do Zimmerman para analisar, automaticamente, a todos os artefactos no registry do Windows, à AmCache e as JumpLists.
 
 ## Requisitos
 
@@ -46,7 +46,7 @@ As cenas da pasta global são os ficheiros do registry do `system32/config`, o A
 
 ### Output Path
 
-A pasta onde irão ser guardados os resultados. (:warning: O script eliminará todos os conteúdos da pasta quando a ela já existe)
+A pasta onde irão ser guardados os resultados. (⚠️ O script eliminará todos os conteúdos da pasta quando a ela já existe)
 
 ## Resultados
 
