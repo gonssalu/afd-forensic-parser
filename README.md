@@ -40,8 +40,8 @@ O `-InputPath` recebe o caminho para uma pasta onde devem estar todos os ficheir
     └── Amcache.hve
 ```
 
-2123456 é um nome exemplo de uma das contas. A pasta Recent é a pasta que está no `%appdata%/Microsoft/Windows/Recent` (contém as cenas das JumpLists).
-As cenas da pasta global são os ficheiros do registry do `system32/config`, o Amcache está no `Windows\appcompat\Programs\Amcache.hve`.
+2123456 é um nome exemplo de uma das contas. A pasta Recent é a pasta que está no `%AppData%\Microsoft\Windows\Recent` (contém as cenas das JumpLists).
+As cenas da pasta global são os ficheiros do registry do `%SystemRoot%\System32\config`, o Amcache está no `%SystemRoot%\appcompat\Programs\Amcache.hve`.
 **Para que fique claro**, devem passar o path que inclui a pasta Users e Global.
 
 ### Output Path
