@@ -11,7 +11,7 @@ Este script utiliza as tools do Zimmerman para analisar, automaticamente, a todo
 ## Sintaxe
 
 A sintaxe do script é a seguinte:
-`.\process.ps1 -ZimmermanTools "<Path ZimmermanTools>" -InputPath "<Input Path>" -OutputPath "<Output Path>"`
+`.\ForensicParser.ps1 -ZimmermanTools "<Path ZimmermanTools>" -InputPath "<Input Path>" -OutputPath "<Output Path>"`
 
 Para além disso existe ainda uma flag opcional `-DebugMode` que quando presente mostra o output de cada ferramenta empregue pelo script. Fica ganda spam por isso recomendo utilizarem apenas se der algum problema para poderem ver de onde vem o erro.
 
