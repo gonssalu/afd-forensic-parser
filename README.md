@@ -46,7 +46,7 @@ As cenas da pasta global são os ficheiros do registry do `%SystemRoot%\System32
 
 ### Output Path
 
-A pasta onde irão ser guardados os resultados. (⚠️ O script eliminará todos os conteúdos da pasta quando a ela já existe)
+A pasta onde irão ser guardados os resultados. (⚠️ O script eliminará todos os conteúdos da pasta quando ela já existe)
 
 ## Resultados
 
