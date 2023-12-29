@@ -60,7 +60,7 @@ function Run-CommandWithLogging {
 
 # Check if folder paths are provided
 if (-not $ZimmermanTools -or -not $InputPath -or -not $OutputPath) {
-    Write-Host 'Usage: process.ps1 -ZimmermanTools "<Path>" -InputPath "<Path>" -OutputPath "<Path>"'
+    Write-Host 'Usage: ForensicParser.ps1 -ZimmermanTools "<Path>" -InputPath "<Path>" -OutputPath "<Path>"'
     exit 1
 }
 
