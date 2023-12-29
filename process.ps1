@@ -60,7 +60,7 @@ function Run-CommandWithLogging {
 
 # Check if folder paths are provided
 if (-not $ZimmermanTools -or -not $InputPath -or -not $OutputPath) {
-    Write-Host "Usage: process.ps1 -ZimmermanTools <path> -InputPath <path> -OutputPath <path>"
+    Write-Host 'Usage: process.ps1 -ZimmermanTools "<Path>" -InputPath "<Path>" -OutputPath "<Path>"'
     exit 1
 }
 
@@ -118,7 +118,7 @@ Run-CommandWithLogging -Command $recmd_cmd -Description "Kroll Batch scan for al
 Run-CommandWithLogging -Command $recmd_globalcmd -Description "Kroll Batch scan for global registry files"
 Run-CommandWithLogging -Command $AmCacheParser_cmd -Description "AmCache Parser"
 
-Write-Host "Done!`n`nConverting CSV files' separator to commas..."
+Write-Host "`nConverting CSV files' separator to commas..."
 
 # Get all CSV files in the directory
 $csvFiles = Get-ChildItem -Path $OutputPath -Filter *.csv -Recurse
