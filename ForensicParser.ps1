@@ -1,3 +1,4 @@
+# Declare input parameters
 param (
     [string]$ZimmermanTools,
     [string]$InputPath,
@@ -5,6 +6,7 @@ param (
     [switch]$DebugMode
 )
 
+# Function to get the full path to a tool executable
 function Get-ToolExecutablePath {
     param (
         [string]$ToolsPath,
@@ -43,6 +45,7 @@ function Process-RecentFolders {
     }
 }
 
+# Function to run a command and log it to the console
 function Run-CommandWithLogging {
     param (
         [string]$Command,
@@ -70,7 +73,6 @@ if (Test-Path -Path $OutputPath -PathType Container) {
     $confirmation = Read-Host "Output path $OutputPath exists. Do you want to proceed and delete its contents? (Y/N)"
 
     if ($confirmation -eq 'Y' -or $confirmation -eq 'y') {
-        # Delete contents of the output path
         Remove-Item -Path $OutputPath\* -Force -Recurse
     } else {
         Write-Host "Operation aborted. No changes made to $OutputPath."
@@ -78,38 +80,36 @@ if (Test-Path -Path $OutputPath -PathType Container) {
     }
 } 
 
-$RECmdPath = Join-Path $ZimmermanTools "RECmd"
 $usersPath = Join-Path $InputPath "Users"
 $OutputUsers = Join-Path $OutputPath "Users"
+
+$RECmdPath = Join-Path $ZimmermanTools "RECmd"
 $recmd = Get-ToolExecutablePath -ToolsPath $RECmdPath -ExecutableName "ReCmd.exe"
-
-$RECmdPathKroll_Batch = Join-Path $RECmdPath "BatchExamples\Kroll_Batch.reb"
-
-$recmd_cmd = "$recmd --bn $RECmdPathKroll_Batch -d $usersPath --csv $OutputUsers"
-
 $KrollBatch = Join-Path -Path $RECmdPath -ChildPath "BatchExamples" | Join-Path -ChildPath "Kroll_Batch.reb"
 
+# Confirm that the Kroll Batch file exists
 if (-not (Test-Path $KrollBatch -PathType Leaf)) {
     Write-Host "Error: Kroll Batch file is missing from $KrollBatch"
     exit 1
 }
 
+# Crafting the RECmd command for user registry files
+$recmd_cmd = "$recmd --bn $KrollBatch -d $usersPath --csv $OutputUsers"
+
 $globalPath = Join-Path $InputPath "Global"
 $OutputGlobal = Join-Path $OutputPath "Global"
 
-$recmd_globalcmd = "$recmd --bn $RECmdPathKroll_Batch -d $globalPath --csv $OutputGlobal"
-
+# Crafting the RECmd command for global registry files
+$recmd_globalcmd = "$recmd --bn $KrollBatch -d $globalPath --csv $OutputGlobal"
 
 $amcacheparser = Get-ToolExecutablePath -ToolsPath $ZimmermanTools -ExecutableName "AmCacheParser.exe"
-
 $OutputAmcache = Join-Path $OutputGlobal "AmcacheParserReport"
 
+# Crafting the AmCacheParser command
 $AmCacheParser_cmd = "$amcacheparser -f $globalPath\Amcache.hve -i --csv $OutputAmcache"
-
+# Crafting the JLEcmd command
 $jlecmd = Get-ToolExecutablePath -ToolsPath $ZimmermanTools -ExecutableName "JLEcmd.exe"
 
-
-# Record the start time
 $startTime = Get-Date
 
 Process-RecentFolders -usersPath $usersPath -jlecmd $jlecmd -OutputUsers $OutputUsers
@@ -120,26 +120,16 @@ Run-CommandWithLogging -Command $AmCacheParser_cmd -Description "AmCache Parser"
 
 Write-Host "`nConverting CSV files' separator to commas..."
 
-# Get all CSV files in the directory
 $csvFiles = Get-ChildItem -Path $OutputPath -Filter *.csv -Recurse
 
-# Loop through each CSV file
 foreach ($csvFile in $csvFiles) {
-    # Read the content of the CSV file as an array of lines
     $content = Get-Content $csvFile.FullName
-
-    # Add 'SEP=,' to the start of the content
     $newContent = @("SEP=,") + $content
-
-    # Write the modified content back to the CSV file, preserving line breaks
     $newContent | Set-Content -Path $csvFile.FullName
 }
 
 Write-Host "Conversion successfully complete!"
 
-# Record the end time
 $endTime = Get-Date
-
-# Calculate and output the duration
 $duration = $endTime - $startTime
 Write-Host "Script execution time: $([math]::Round($duration.TotalSeconds, 0)) seconds"
